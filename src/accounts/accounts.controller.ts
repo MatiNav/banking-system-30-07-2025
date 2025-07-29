@@ -1,15 +1,7 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { AccountsService } from './accounts.service';
 import { CreateAccountDto } from './dto/create-account.dto';
-import { UpdateAccountDto } from './dto/update-account.dto';
+import { CreateMovementDto } from './dto/create-movement.dto';
 
 @Controller('accounts')
 export class AccountsController {
@@ -20,23 +12,18 @@ export class AccountsController {
     return this.accountsService.create(createAccountDto);
   }
 
-  @Get()
-  findAll() {
-    return this.accountsService.findAll();
+  @Post()
+  createMovement(@Body() createMovementDto: CreateMovementDto) {
+    return this.accountsService.createMovement(createMovementDto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.accountsService.findOne(+id);
+  @Get(':accountId')
+  findOne(@Param('accountId') accountId: string) {
+    return this.accountsService.findOne(accountId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAccountDto: UpdateAccountDto) {
-    return this.accountsService.update(+id, updateAccountDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.accountsService.remove(+id);
+  @Delete(':accountId')
+  remove(@Param('accountId') accountId: string) {
+    return this.accountsService.remove(accountId);
   }
 }

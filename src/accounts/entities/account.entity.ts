@@ -14,7 +14,7 @@ export class Account {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('float')
+  @Column('float', { default: 0 })
   @Check('balance >= 0')
   balance: number;
 
