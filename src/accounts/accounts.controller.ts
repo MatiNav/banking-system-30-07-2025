@@ -12,9 +12,12 @@ export class AccountsController {
     return this.accountsService.create(createAccountDto);
   }
 
-  @Post()
-  createMovement(@Body() createMovementDto: CreateMovementDto) {
-    return this.accountsService.createMovement(createMovementDto);
+  @Post(':accountId/movements')
+  createMovement(
+    @Param('accountId') accountId: string,
+    @Body() createMovementDto: CreateMovementDto,
+  ) {
+    return this.accountsService.createMovement(accountId, createMovementDto);
   }
 
   @Get(':accountId')

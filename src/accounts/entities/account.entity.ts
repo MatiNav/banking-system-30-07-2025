@@ -21,15 +21,21 @@ export class Account {
   @Column('text')
   name: string;
 
-  @OneToMany(() => Deposit, (deposit) => deposit.account)
+  @OneToMany(() => Deposit, (deposit) => deposit.account, { cascade: true })
   deposits: Deposit[];
 
-  @OneToMany(() => Withdrawal, (withdrawal) => withdrawal.account)
+  @OneToMany(() => Withdrawal, (withdrawal) => withdrawal.account, {
+    cascade: true,
+  })
   withdrawals: Withdrawal[];
 
-  @OneToMany(() => Transfer, (transfer) => transfer.accountTo)
+  @OneToMany(() => Transfer, (transfer) => transfer.accountTo, {
+    cascade: true,
+  })
   transfersIn: Transfer[];
 
-  @OneToMany(() => Transfer, (transfer) => transfer.accountFrom)
+  @OneToMany(() => Transfer, (transfer) => transfer.accountFrom, {
+    cascade: true,
+  })
   transfersOut: Transfer[];
 }
