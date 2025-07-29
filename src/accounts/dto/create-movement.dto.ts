@@ -9,5 +9,5 @@ export class CreateMovementDto {
 
   @IsString()
   @IsOptional()
-  accountToId?: string; // for transfers
+  accountToId?: string; // for transfers'
 }

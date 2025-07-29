@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateAccountDto } from './dto/create-account.dto';
@@ -27,12 +27,31 @@ export class AccountsService {
     return 'This action adds a new account';
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} account`;
+  async findOne(accountId: string) {
+    try {
+      const account = await this.accountRepository.findOne({
+        where: { id: accountId },
+        relations: {
+          deposits: true,
+          withdrawals: true,
+          transfersIn: true,
+          transfersOut: true,
+        },
+      });
+
+      if (!account)
+        throw new NotFoundException(
+          `Account with id: "${accountId}" not found.`,
+        );
+
+      return account;
+    } catch (error) {
+      this.handleExceptions(error);
+    }
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} account`;
+  remove(accountId: string) {
+    return `This action removes a #${accountId} account`;
   }
 
   private handleExceptions(error: any) {
